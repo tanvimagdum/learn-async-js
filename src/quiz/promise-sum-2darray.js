@@ -28,14 +28,33 @@ for (let x = 0; x < array2D.length; x++) {
     rowSumPromises.push(sum2DArrayFast(array2D, x));
 }
 
-Promise.all(rowSumPromises)
-.then((rowSums) => {
-    let sum = 0;
-    rowSums.forEach(rowSum => {
-        sum += rowSum;
-    });
-    console.log(`Sum = ${sum}`);
-})
-.catch((err) => {
-    console.log(err);
-});
+// Promise.all(rowSumPromises)
+// .then((rowSums) => {
+//     let sum = 0;
+//     rowSums.forEach(rowSum => {
+//         sum += rowSum;
+//     });
+//     console.log(`Sum = ${sum}`);
+// })
+// .catch((err) => {
+//     console.log(err);
+// });
+
+
+async function calculateSum() {
+    
+    try {
+        const rowSums = await Promise.all(rowSumPromises);
+        let sum = 0;
+        rowSums.forEach(rowSum => {
+            sum += rowSum;
+        });
+        console.log(`Sum = ${sum}`);
+        return 'done';
+    }
+    catch(err) {
+        console.log(err);
+        return 'failed';    }
+}
+
+calculateSum().then((status) => console.log(status));
